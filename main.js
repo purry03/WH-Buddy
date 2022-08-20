@@ -136,7 +136,6 @@ async function getCurrentSystem(characterID, token) {
         const responseJSON = await response.json();
         const systemName = getSystemNameFromID(responseJSON.solar_system_id);
         const systemDetails = getSystemDetailsFromName(systemName);
-        console.log(systemDetails);
         win.webContents.send("system", systemName);
         win.webContents.send("statics", systemDetails.static)
     }, 5000);
@@ -157,5 +156,5 @@ ipcMain.on('resize-original', (event, arg) => {
 })
 
 ipcMain.on('resize-reduced', (event, arg) => {
-    win.setSize(400, 100)
+    win.setSize(400, 95)
 })

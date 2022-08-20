@@ -5,6 +5,7 @@
     padding: 0;
     user-select: none;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 body{
@@ -14,6 +15,7 @@ body{
 }
 
 nav{
+    height:35px;
     display: flex;
     align-items: center;
     padding: 5px;
