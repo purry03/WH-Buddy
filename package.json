@@ -1,0 +1,25 @@
+{
+  "name": "wh-buddy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^20.0.3",
+    "electron-reloader": "^1.2.3"
+  },
+  "dependencies": {
+    "cookie-session": "^2.0.0",
+    "express": "^4.18.1",
+    "jquery": "^3.6.0",
+    "node-fetch": "^3.2.10",
+    "passport": "0.5.0",
+    "passport-eve-oauth2": "^1.0.3",
+    "randomstring": "^1.2.2"
+  }
+}

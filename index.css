@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@200;300;400;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    overflow: hidden;
+}
+
+body{
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-family: 'Noto Sans', sans-serif;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+nav h3{
+    font-weight: 200;
+    font-size: 0.9rem;
+    -webkit-app-region: drag;
+}
+
+nav .trackingStatus{
+    height: 10px;
+    width: 10px;
+    background-color:red;
+    margin-right: 5px;
+    border-radius: 100px;
+}
+
+nav img{
+    margin-left: auto;
+    height: 25px;
+    cursor: pointer;
+}
+
+.main{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+}
+
+#minimize{
+    position: absolute;
+    right:10px;
+    height: 15px;
+    width: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background-color: rgba(255,255,255, 0.1);
+    border: 1px ridge #eee;
+    cursor: pointer;
+}
+
+#system{
+    font-size: 2rem;
+    letter-spacing: 1.25pt;
+    color: chartreuse;
+}
+
+.class{
+    font-size: 1.5rem;
+    color:deeppink;
+}
+
+.statics{
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+    letter-spacing: 1pt;
+    color:aqua
+}
+
+.statics sup{
+    margin: 5px;
+    color:chocolate
+}
+
+.main hr{
+    margin: 10px 0;
+    width: 100%;
+}
