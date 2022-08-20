@@ -12,12 +12,14 @@ let navBarIsHidden = false;
 $('#minimize').on("click", (event, data) => {
     if (navBarIsHidden) {
         $("nav").show();
-        ipcRenderer.send('resize-original')
-        navBarIsHidden = false;
+        ipcRenderer.send('resize-original');
+        $("#minimize").html("-");
+            navBarIsHidden = false;
     }
     else {
         $("nav").hide();
-        ipcRenderer.send('resize-reduced')
+        ipcRenderer.send('resize-reduced');
+        $("#minimize").html("+");
         navBarIsHidden = true;
     }
 });
@@ -31,16 +33,16 @@ ipcRenderer.on("system", (event, system) => {
 })
 
 ipcRenderer.on("statics", (event, statics) => {
-    console.log(statics);
-    $(".statics").html(statics);
+    $(".statics").html(statics.toString().toUpperCase());
 })
 
 ipcRenderer.on("onlineStatus", (event, isOnline) => {
     if (isOnline) {
         $(".trackingStatus").css("background-color", "green");
+        $(".trackingStatus").attr("title", "Online");
     }
     else {
         $(".trackingStatus").css("background-color", "red");
-
+        $(".trackingStatus").attr("title", "Offline");
     }
 })
