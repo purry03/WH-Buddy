@@ -5,12 +5,14 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager . wh-buddy --platform=win32 --arch=x64"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "electron": "^20.0.3",
+    "electron-packager": "^15.5.1",
     "electron-reloader": "^1.2.3"
   },
   "dependencies": {
