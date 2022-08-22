@@ -106,6 +106,7 @@ server.get('/auth/eve', passport.authenticate('eveOnline'));
 server.get('/auth/callback', passport.authenticate('eveOnline', { failureRedirect: '/' }), async function (req, res) {
     clearInterval(getCurrentSystem_cron);
     clearInterval(getOnlineStatus_cron);
+    clearInterval(refreshToken_cron);
     res.send(req.user);
     win.webContents.send("login", req.user.profile.CharacterName);
     getCurrentSystem(req.user.profile.CharacterID, req.user);
@@ -113,42 +114,7 @@ server.get('/auth/callback', passport.authenticate('eveOnline', { failureRedirec
     refreshToken(req.user);
 });
 
-async function refreshToken(user) {
-    var details = {
-        'grant_type': 'refresh_token',
-        'refresh_token': encodeURI(user.refreshToken),
-        'scopes': "esi-location.read_location.v1 esi-location.read_online.v1",
-    };
 
-
-    var formBody = [];
-    for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-
-    const contentHeader = "application/x-www-form-urlencoded";
-    const hostHeader = "login.eveonline.com";
-    const authHeader = "Basic ZDAxZjc3ODRiN2RiNDRmMjlkNjA2NWI2YmIwNTJhM2I7QVV4cDRVWFRnbGg0R0daemk5dmpHcXNPQjlhem9aUWdod0tmSml6MA==";
-
-    const response = await fetch('https://login.eveonline.com/v2/oauth/token', {
-        method: 'post',
-        body: formBody,
-        headers: { 'Content-Type': contentHeader, 'Host': hostHeader, 'Authorization': authHeader }
-    });
-
-    console.log(await response.text());
-    // const data = await response.json();
-
-    // if (data.error) {
-    //     console.log(data.error);
-    // }
-
-    // user.accessToken = data.accessToken;
-    // user.refreshToken = data.refreshToken;
-}
 
 function getSystemNameFromID(id) {
     for (entry of systems) {
@@ -166,7 +132,7 @@ function getSystemDetailsFromName(name) {
     }
 }
 
-let getCurrentSystem_cron, getOnlineStatus_cron;
+let getCurrentSystem_cron, getOnlineStatus_cron, refreshToken_cron;
 
 async function getCurrentSystem(characterID, user) {
     getCurrentSystem_cron = setInterval(async () => {
@@ -189,6 +155,47 @@ async function getOnlineStatus(characterID, user) {
         const responseJSON = await response.json();
         win.webContents.send("onlineStatus", responseJSON.online);
     }, 30000);
+}
+
+async function refreshToken(user) {
+
+    refreshToken_cron = setInterval(async ()=>{
+        
+    var details = {
+        'grant_type': 'refresh_token',
+        'refresh_token': encodeURI(user.refreshToken),
+        'scopes': "esi-location.read_location.v1 esi-location.read_online.v1",
+    };
+
+    var formBody = [];
+    for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    const contentHeader = "application/x-www-form-urlencoded";
+    const hostHeader = "login.eveonline.com";
+    const authHeader = "Basic ZDAxZjc3ODRiN2RiNDRmMjlkNjA2NWI2YmIwNTJhM2I6QVV4cDRVWFRnbGg0R0daemk5dmpHcXNPQjlhem9aUWdod0tmSml6MA==";
+
+    const response = await fetch('https://login.eveonline.com/v2/oauth/token', {
+        method: 'post',
+        body: formBody,
+        headers: { 'Content-Type': contentHeader, 'Host': hostHeader, 'Authorization': authHeader }
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+        console.log(data.error);
+        return;
+    }
+
+    user.accessToken = data.access_token;
+    user.refreshToken = data.refresh_token;
+    },300000);
+
 }
 
 ipcMain.on('resize-original', (event, arg) => {
