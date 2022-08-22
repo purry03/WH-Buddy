@@ -15,9 +15,8 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 
 const fs = require("fs");
 
-const systems = JSON.parse(fs.readFileSync("systems.json"));
-const whData = JSON.parse(fs.readFileSync("whData.json"));
-
+const systems = JSON.parse(fs.readFileSync(__dirname + "/extraResources/systems.json"));
+const whData = JSON.parse(fs.readFileSync(__dirname + "/extraResources/whData.json"));
 
 server.use(session({
     resave: false,
@@ -33,7 +32,6 @@ passport.use(new EveOAuth2Strategy({
     state: "secret"
 },
     function (accessToken, refreshToken, profile, cb) {
-
         return cb(null, {
             'accessToken': accessToken,
             'refreshToken': refreshToken,
@@ -106,11 +104,51 @@ server.get("/", function (req, res) {
 server.get('/auth/eve', passport.authenticate('eveOnline'));
 
 server.get('/auth/callback', passport.authenticate('eveOnline', { failureRedirect: '/' }), async function (req, res) {
+    clearInterval(getCurrentSystem_cron);
+    clearInterval(getOnlineStatus_cron);
     res.send(req.user);
     win.webContents.send("login", req.user.profile.CharacterName);
-    getCurrentSystem(req.user.profile.CharacterID, req.user.accessToken);
-    getOnlineStatus(req.user.profile.CharacterID, req.user.accessToken);
+    getCurrentSystem(req.user.profile.CharacterID, req.user);
+    getOnlineStatus(req.user.profile.CharacterID, req.user);
+    refreshToken(req.user);
 });
+
+async function refreshToken(user) {
+    var details = {
+        'grant_type': 'refresh_token',
+        'refresh_token': encodeURI(user.refreshToken),
+        'scopes': "esi-location.read_location.v1 esi-location.read_online.v1",
+    };
+
+
+    var formBody = [];
+    for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    const contentHeader = "application/x-www-form-urlencoded";
+    const hostHeader = "login.eveonline.com";
+    const authHeader = "Basic ZDAxZjc3ODRiN2RiNDRmMjlkNjA2NWI2YmIwNTJhM2I7QVV4cDRVWFRnbGg0R0daemk5dmpHcXNPQjlhem9aUWdod0tmSml6MA==";
+
+    const response = await fetch('https://login.eveonline.com/v2/oauth/token', {
+        method: 'post',
+        body: formBody,
+        headers: { 'Content-Type': contentHeader, 'Host': hostHeader, 'Authorization': authHeader }
+    });
+
+    console.log(await response.text());
+    // const data = await response.json();
+
+    // if (data.error) {
+    //     console.log(data.error);
+    // }
+
+    // user.accessToken = data.accessToken;
+    // user.refreshToken = data.refreshToken;
+}
 
 function getSystemNameFromID(id) {
     for (entry of systems) {
@@ -128,9 +166,11 @@ function getSystemDetailsFromName(name) {
     }
 }
 
-async function getCurrentSystem(characterID, token) {
-    setInterval(async () => {
-        const response = await fetch(`https://esi.evetech.net/latest/characters/${characterID}/location?datasource=tranquility&token=${token}`, {
+let getCurrentSystem_cron, getOnlineStatus_cron;
+
+async function getCurrentSystem(characterID, user) {
+    getCurrentSystem_cron = setInterval(async () => {
+        const response = await fetch(`https://esi.evetech.net/latest/characters/${characterID}/location?datasource=tranquility&token=${user.accessToken}`, {
             method: 'get',
         });
         const responseJSON = await response.json();
@@ -141,9 +181,9 @@ async function getCurrentSystem(characterID, token) {
     }, 5000);
 }
 
-async function getOnlineStatus(characterID, token) {
-    setInterval(async () => {
-        const response = await fetch(`https://esi.evetech.net/latest/characters/${characterID}/online?datasource=tranquility&token=${token}`, {
+async function getOnlineStatus(characterID, user) {
+    getOnlineStatus_cron = setInterval(async () => {
+        const response = await fetch(`https://esi.evetech.net/latest/characters/${characterID}/online?datasource=tranquility&token=${user.accessToken}`, {
             method: 'get',
         });
         const responseJSON = await response.json();
