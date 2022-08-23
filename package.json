@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager ./ wh-buddy --platform=win32 --arch=x64 --out=./build"
+    "build": "electron-packager ./ --platform=win32 --arch=x64 --out=./build --icon=./img/wormhole.png"
   },
   "build": {
     "directories": {

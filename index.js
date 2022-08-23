@@ -16,12 +16,14 @@ $('#minimize').on("click", (event, data) => {
         $("nav").show();
         ipcRenderer.send('resize-original');
         $("#minimize").html("-");
+        $("#minimize").attr("title", "Pin Window");
         navBarIsHidden = false;
     }
     else {
         $("nav").hide();
         ipcRenderer.send('resize-reduced');
         $("#minimize").html("+");
+        $("#minimize").attr("title", "Unpin Window");
         navBarIsHidden = true;
     }
 });
@@ -44,9 +46,13 @@ ipcRenderer.on("systemID", (event, system) => {
 
 ipcRenderer.on("systemName", (event, system) => {
     systemName = system.toString();
-    $("#system").html(system);
+    $("#system .name").html(system);
     $("#anoikis").attr("href", `http://anoik.is/systems/${systemName}`);
     $("#dotlan").attr("href", `https://evemaps.dotlan.net/system/${systemName}`);
+});
+
+ipcRenderer.on("systemClass", (event, systemClass) => {
+    $("#system .class").html(systemClass.toString().toUpperCase());
 });
 
 ipcRenderer.on("statics", (event, statics) => {

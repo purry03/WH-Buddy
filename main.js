@@ -59,11 +59,13 @@ const createWindow = () => {
         height: 130,
         transparent: true,
         frame: false,
-        resizable: true,
+        resizable: false,
+        minimizable: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-        }
+        },
+        icon: __dirname + "/img/wormhole.png"
     });
 
     win.setAlwaysOnTop(true, 'screen');
@@ -145,6 +147,7 @@ async function getCurrentSystem(characterID, user) {
         const systemDetails = getSystemDetailsFromName(systemName);
         win.webContents.send("systemID", responseJSON.solar_system_id);
         win.webContents.send("systemName", systemName);
+        win.webContents.send("systemClass", systemDetails.class)
         win.webContents.send("statics", systemDetails.static)
     }, 5000);
 }
