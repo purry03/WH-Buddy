@@ -130,6 +130,7 @@ function getSystemDetailsFromName(name) {
             return wh
         }
     }
+    return { 'name': name };
 }
 
 let getCurrentSystem_cron, getOnlineStatus_cron, refreshToken_cron;
@@ -142,7 +143,8 @@ async function getCurrentSystem(characterID, user) {
         const responseJSON = await response.json();
         const systemName = getSystemNameFromID(responseJSON.solar_system_id);
         const systemDetails = getSystemDetailsFromName(systemName);
-        win.webContents.send("system", systemName);
+        win.webContents.send("systemID", responseJSON.solar_system_id);
+        win.webContents.send("systemName", systemName);
         win.webContents.send("statics", systemDetails.static)
     }, 5000);
 }
@@ -159,49 +161,49 @@ async function getOnlineStatus(characterID, user) {
 
 async function refreshToken(user) {
 
-    refreshToken_cron = setInterval(async ()=>{
-        
-    var details = {
-        'grant_type': 'refresh_token',
-        'refresh_token': encodeURI(user.refreshToken),
-        'scopes': "esi-location.read_location.v1 esi-location.read_online.v1",
-    };
+    refreshToken_cron = setInterval(async () => {
 
-    var formBody = [];
-    for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
+        var details = {
+            'grant_type': 'refresh_token',
+            'refresh_token': encodeURI(user.refreshToken),
+            'scopes': "esi-location.read_location.v1 esi-location.read_online.v1",
+        };
 
-    const contentHeader = "application/x-www-form-urlencoded";
-    const hostHeader = "login.eveonline.com";
-    const authHeader = "Basic ZDAxZjc3ODRiN2RiNDRmMjlkNjA2NWI2YmIwNTJhM2I6QVV4cDRVWFRnbGg0R0daemk5dmpHcXNPQjlhem9aUWdod0tmSml6MA==";
+        var formBody = [];
+        for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
 
-    const response = await fetch('https://login.eveonline.com/v2/oauth/token', {
-        method: 'post',
-        body: formBody,
-        headers: { 'Content-Type': contentHeader, 'Host': hostHeader, 'Authorization': authHeader }
-    });
+        const contentHeader = "application/x-www-form-urlencoded";
+        const hostHeader = "login.eveonline.com";
+        const authHeader = "Basic ZDAxZjc3ODRiN2RiNDRmMjlkNjA2NWI2YmIwNTJhM2I6QVV4cDRVWFRnbGg0R0daemk5dmpHcXNPQjlhem9aUWdod0tmSml6MA==";
 
-    const data = await response.json();
+        const response = await fetch('https://login.eveonline.com/v2/oauth/token', {
+            method: 'post',
+            body: formBody,
+            headers: { 'Content-Type': contentHeader, 'Host': hostHeader, 'Authorization': authHeader }
+        });
 
-    if (data.error) {
-        console.log(data.error);
-        return;
-    }
+        const data = await response.json();
 
-    user.accessToken = data.access_token;
-    user.refreshToken = data.refresh_token;
-    },300000);
+        if (data.error) {
+            console.log(data.error);
+            return;
+        }
+
+        user.accessToken = data.access_token;
+        user.refreshToken = data.refresh_token;
+    }, 300000);
 
 }
 
 ipcMain.on('resize-original', (event, arg) => {
-    win.setSize(400, 130)
+    win.setSize(400, 150)
 })
 
 ipcMain.on('resize-reduced', (event, arg) => {
-    win.setSize(400, 95)
+    win.setSize(400, 110)
 })

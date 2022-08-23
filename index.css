@@ -77,11 +77,11 @@ nav img{
 }
 
 .statics{
-    margin-top: 10px;
+    margin: 10px 0;
     text-align: center;
     width: 100%;
     letter-spacing: 1pt;
-    color:aqua
+    color:aqua;
 }
 
 .statics sup{
@@ -92,4 +92,15 @@ nav img{
 .main hr{
     margin: 10px 0;
     width: 100%;
+}
+
+.links{
+    display: flex;
+    gap: 10px;
+}
+
+.links img{
+    height: 20px;
+    cursor: pointer;
+    border: 1px solid #333;
 }
