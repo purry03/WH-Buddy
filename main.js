@@ -99,7 +99,7 @@ server.listen("3000", function (err) {
 });
 
 server.get("/", function (req, res) {
-    res.send("hello");
+    res.send("WH Buddy");
 })
 
 
@@ -109,7 +109,7 @@ server.get('/auth/callback', passport.authenticate('eveOnline', { failureRedirec
     clearInterval(getCurrentSystem_cron);
     clearInterval(getOnlineStatus_cron);
     clearInterval(refreshToken_cron);
-    res.send(req.user);
+    res.send("Authentication Successful!");
     win.webContents.send("login", req.user.profile.CharacterName);
     getCurrentSystem(req.user.profile.CharacterID, req.user);
     getOnlineStatus(req.user.profile.CharacterID, req.user);
