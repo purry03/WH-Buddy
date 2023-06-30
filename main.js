@@ -28,7 +28,7 @@ passport.use(new EveOAuth2Strategy({
     clientID: 'd01f7784b7db44f29d6065b6bb052a3b',
     clientSecret: 'AUxp4UXTglh4GGZzi9vjGqsOB9azoZQghwKfJiz0',
     scope: "esi-location.read_location.v1 esi-location.read_online.v1",
-    callbackURL: 'http://localhost:3000/auth/callback',
+    callbackURL: 'http://localhost:62340/auth/callback',
     state: "secret"
 },
     function (accessToken, refreshToken, profile, cb) {
@@ -59,8 +59,9 @@ const createWindow = () => {
         height: 130,
         transparent: true,
         frame: false,
-        resizable: false,
+        resizable: true,
         minimizable: false,
+        title: "WH Buddy",
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -89,7 +90,7 @@ app.on('window-all-closed', () => {
 });
 
 
-server.listen("3000", function (err) {
+server.listen("62340", function (err) {
     if (err) {
         console.log(err);
     }
@@ -147,7 +148,12 @@ async function getCurrentSystem(characterID, user) {
         const systemDetails = getSystemDetailsFromName(systemName);
         win.webContents.send("systemID", responseJSON.solar_system_id);
         win.webContents.send("systemName", systemName);
+        if(systemDetails.class){
         win.webContents.send("systemClass", systemDetails.class)
+        }
+        else{
+            win.webContents.send("systemClass", '')
+        }
         win.webContents.send("statics", systemDetails.static)
     }, 5000);
 }

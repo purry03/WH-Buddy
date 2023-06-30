@@ -6,7 +6,7 @@ ipcRenderer.send('resize-original');
 
 
 $('#logInBtn').on("click", (event, data) => {
-    require('electron').shell.openExternal("http://localhost:3000/auth/eve");
+    require('electron').shell.openExternal("http://localhost:62340/auth/eve");
 });
 
 let navBarIsHidden = false;
