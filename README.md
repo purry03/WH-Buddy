@@ -21,7 +21,7 @@ To use WH Buddy, you can download the zip file from the [Releases](https://githu
 Usage 🚀
 --------
 
-1) Extract the zip file to somewhere convinient.
+1) Extract the zip file to somewhere convenient.
 2) Open the extracted folder and double click on wh-buddy.exe
 3) Click on the "LOG IN with EVE Online" button and auth the character that you wish to track
 4) You can move the overlay around by clicking and dragging the character name at the top left
