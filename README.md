@@ -3,7 +3,7 @@ WH Buddy 🌌
 
 WH Buddy is a third-party tool for Eve Online that provides a transparent overlay on your screen. It tracks the current system you're in and displays information about the system's static and wormhole class. With WH Buddy, you no longer need to manually check websites like Anoikis for this information. Additionally, the tool offers convenient buttons to directly open Dotlan, Anoikis, and Zkillboard for the current system.
 
-![screenshot](image link)
+![screenshot](https://raw.githubusercontent.com/purry03/WH-Buddy/master/img/demo/img1.png)
 
 Features ✨
 ----------
@@ -15,7 +15,17 @@ Features ✨
 Installation 💻
 ---------------
 
-To use WH Buddy, you can download the executable file from the [Releases](https://github.com/purry03/WH-Buddy/releases) section. Choose the appropriate version for your operating system.
+To use WH Buddy, you can download the zip file from the [Releases](https://github.com/purry03/WH-Buddy/releases) section. Choose the appropriate version for your operating system.
+
+
+Usage 🚀
+--------
+
+1) Extract the zip file to somewhere convinient.
+2) Open the extracted folder and double click on wh-buddy.exe
+3) Click on the "LOG IN with EVE Online" button and auth the character that you wish to track
+4) You can move the overlay around by clicking and dragging the character name at the top left
+5) Compact mode can be enabled by pressing the "-" button at the top right. 
 
 Development 🛠️
 ---------------
@@ -53,11 +63,6 @@ To build the application for distribution, you can use the following command:
 
 This command will package the application using Electron Packager and create an executable file for your platform in the `build` directory. The resulting file will include the specified icon.
 
-Usage 🚀
---------
-
-Once you have the WH Buddy executable, simply double-click on it to launch the application. The transparent overlay will appear on your screen, displaying the current system information. You can use the buttons provided to open Dotlan, Anoikis, and Zkillboard for the system.
-
 Contributing 🤝
 ---------------
 
@@ -73,7 +78,7 @@ This project is licensed under the [MIT License](https://chat.openai.com/LICENSE
 Disclaimer ❗️
 -------------
 
-WH Buddy is a third-party tool and is not affiliated with or endorsed by Eve Online or its developers. Use this tool at your own risk.
+WH Buddy is a third-party tool and is not affiliated with or endorsed by Eve Online or its developers. Use of this tool is not against the EVE Online EULA.
 
 
 Happy wormhole exploring with WH Buddy! 🚀🌌
