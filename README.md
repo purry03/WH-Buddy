@@ -3,6 +3,8 @@ WH Buddy 🌌
 
 WH Buddy is a third-party tool for Eve Online that provides a transparent overlay on your screen. It tracks the current system you're in and displays information about the system's static and wormhole class. With WH Buddy, you no longer need to manually check websites like Anoikis for this information. Additionally, the tool offers convenient buttons to directly open Dotlan, Anoikis, and Zkillboard for the current system.
 
+![screenshot](image link)
+
 Features ✨
 ----------
 
@@ -13,7 +15,7 @@ Features ✨
 Installation 💻
 ---------------
 
-To use WH Buddy, you can download the executable file from the [Releases](https://github.com/example/wh-buddy/releases) section. Choose the appropriate version for your operating system.
+To use WH Buddy, you can download the executable file from the [Releases](https://github.com/purry03/WH-Buddy/releases) section. Choose the appropriate version for your operating system.
 
 Development 🛠️
 ---------------
