@@ -66,14 +66,14 @@ This command will package the application using Electron Packager and create an 
 Contributing 🤝
 ---------------
 
-Contributions to WH Buddy are welcome! If you find a bug or have an idea for an improvement, feel free to open an issue or submit a pull request on the [GitHub repository](https://github.com/example/wh-buddy).
+Contributions to WH Buddy are welcome! If you find a bug or have an idea for an improvement, feel free to open an issue or submit a pull request on the [GitHub repository](https://github.com/purry03/WH-Buddy).
 
 When contributing, please follow the existing code style and provide clear and concise descriptions of your changes.
 
 License 📄
 ----------
 
-This project is licensed under the [MIT License](https://chat.openai.com/LICENSE).
+This project is licensed under the [MIT License](https://github.com/purry03/WH-Buddy/blob/master/LICENSE).
 
 Disclaimer ❗️
 -------------
