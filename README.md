@@ -38,7 +38,7 @@ If you wish to run WH Buddy locally for development purposes, follow the steps b
 
 ### Clone the repository
 
-`git clone https://github.com/example/wh-buddy.git`
+`git clone https://github.com/purry03/WH-Buddy`
 
 ### Navigate to the project directory
 
