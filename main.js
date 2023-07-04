@@ -11,6 +11,11 @@ const session = require('cookie-session');
 const passport = require('passport');
 const EveOAuth2Strategy = require('passport-eve-oauth2').Strategy;
 const randomstring = require("randomstring");
+const ua = require('universal-analytics');
+const visitor = ua('UA-275958012-1'); // Replace with your Measurement ID
+visitor.pageview('/', 'WH-Buddy', '0.0.1').send();
+
+
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const fs = require("fs");
